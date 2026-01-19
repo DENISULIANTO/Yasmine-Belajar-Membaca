@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Belajar Membaca - Suku Kata L</title>
+    <style>
+        :root {
+            --bg-color: #0d1b2a; 
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            margin: 0;
+            padding: 40px 0;
+            background-color: var(--bg-color);
+            font-family: 'Comic Sans MS', 'Arial', sans-serif;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* --- Animasi Latar Belakang Malam --- */
+        .night {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at top right, #1B2735 0%, #090A0F 100%);
+            overflow: hidden;
+        }
+
+        /* --- Bulan Sabit --- */
+        .moon {
+            position: absolute;
+            top: 40px;
+            right: 60px;
+            width: 70px;
+            height: 70px;
+            background-color: transparent;
+            border-radius: 50%;
+            box-shadow: -15px 10px 0 5px #f1c40f;
+            filter: drop-shadow(0 0 15px rgba(241, 196, 15, 0.6));
+            transform: rotate(-15deg);
+        }
+
+        /* --- Hembusan Angin (Background Animasi) --- */
+        .wind-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .wind-particle {
+            position: absolute;
+            height: 1px;
+            background: linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,0.3), rgba(255,255,255,0));
+            border-radius: 100%;
+            animation: wind-flow linear infinite;
+        }
+
+        @keyframes wind-flow {
+            0% { transform: translateX(-100vw); opacity: 0; }
+            50% { opacity: 0.5; }
+            100% { transform: translateX(100vw); opacity: 0; }
+        }
+
+        /* --- Bintang Jatuh (Ke Bawah) --- */
+        .shooting_star {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(-45deg, #5f91ff, rgba(0, 0, 255, 0));
+            border-radius: 999px;
+            filter: drop-shadow(0 0 6px #699bff);
+            animation: tail 3000ms ease-in-out infinite, shooting 3000ms ease-in-out infinite;
+        }
+
+        .shooting_star::before, .shooting_star::after {
+            content: '';
+            position: absolute;
+            top: calc(50% - 1px);
+            right: 0;
+            height: 2px;
+            background: linear-gradient(-45deg, rgba(0, 0, 255, 0), #5f91ff, rgba(0, 0, 255, 0));
+            transform: translateX(50%) rotateZ(45deg);
+            border-radius: 100%;
+            animation: shining 3000ms ease-in-out infinite;
+        }
+
+        .shooting_star::after { transform: translateX(50%) rotateZ(-45deg); }
+
+        .shooting_star:nth-child(1) { top: -10%; left: 15%; animation-delay: 0s; }
+        .shooting_star:nth-child(2) { top: -5%; left: 45%; animation-delay: 1s; }
+        .shooting_star:nth-child(3) { top: -15%; left: 75%; animation-delay: 2s; }
+        .shooting_star:nth-child(4) { top: 0%; left: 30%; animation-delay: 3.5s; }
+        .shooting_star:nth-child(5) { top: -10%; left: 85%; animation-delay: 5s; }
+
+        @keyframes tail { 0% { width: 0; } 30% { width: 100px; } 100% { width: 0; } }
+        @keyframes shining { 0% { width: 0; } 50% { width: 30px; } 100% { width: 0; } }
+        @keyframes shooting {
+            0% { transform: rotate(45deg) translateX(0); opacity: 1; }
+            100% { transform: rotate(45deg) translateX(800px); opacity: 0; }
+        }
+
+        /* --- Konten Kartu --- */
+        .row-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            width: 100%;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+
+        .kartu {
+            padding: 25px 35px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            font-size: 50px;
+            font-weight: bold;
+            color: #333;
+            cursor: pointer;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.4);
+            transition: transform 0.1s;
+            user-select: none;
+            text-align: center;
+            border: 4px solid transparent;
+        }
+
+        .kartu:active {
+            transform: scale(0.9);
+            filter: brightness(0.9);
+        }
+
+        hr {
+            border: none;
+            border-top: 4px dashed rgba(255,255,255,0.3);
+            width: 85%;
+            margin: 30px 0;
+            z-index: 1;
+        }
+
+        /* Warna khusus suku kata */
+        .l { color: #ff4757; border-color: #ff4757; }  
+        .la { color: #2ed573; border-color: #2ed573; } 
+        .li { color: #1e90ff; border-color: #1e90ff; } 
+        .lu { color: #ffa502; border-color: #ffa502; } 
+        .le { color: #a4b0be; border-color: #a4b0be; } 
+        .lo { color: #ff6b81; border-color: #ff6b81; }
+
+        h1 {
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            margin-bottom: 75px;
+            z-index: 1;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="night">
+        <div class="moon"></div>
+        <div class="shooting_star"></div>
+        <div class="shooting_star"></div>
+        <div class="shooting_star"></div>
+        <div class="shooting_star"></div>
+        <div class="shooting_star"></div>
+    </div>
+
+    <div class="wind-container" id="wind-box"></div>
+
+    <h1>Yuk, Belajar Membaca! 🌟</h1>
+
+    <div class="row-container">
+        <div class="kartu l" onclick="suara('L')">l</div>
+        <div class="kartu la" onclick="suara('la')">la</div>
+        <div class="kartu li" onclick="suara('li')">li</div>
+        <div class="kartu lu" onclick="suara('lu')">lu</div>
+        <div class="kartu le" onclick="suara('le')|">le</div>
+        <div class="kartu lo" onclick="suara('lo')">lo</div>
+    </div>
+
+    <div class="row-container">
+        <div class="kartu li" onclick="suara('li')">li</div>
+    </div>
+
+    <div class="row-container">
+        <div class="kartu" onclick="suara('ba')">ba</div>
+        <div class="kartu li" onclick="suara('li')">li</div>
+        <div class="kartu li" onclick="suara('li')">li</div>
+        <div class="kartu" onclick="suara('ga')">ga</div>
+    </div>
+
+    <div class="row-container">
+        <div class="kartu" onclick="suara('ka')">ka</div>
+        <div class="kartu li" onclick="suara('li')">li</div>
+        <div class="kartu" onclick="suara('ga')">ga</div>
+        <div class="kartu li" onclick="suara('li')">li</div>
+    </div>
+
+    <div class="row-container">
+        <div class="kartu" onclick="suara('ta')">ta</div>
+        <div class="kartu li" onclick="suara('li')">li</div>
+        <div class="kartu" onclick="suara('wa')">wa</div>
+        <div class="kartu li" onclick="suara('li')">li</div>
+    </div>
+
+    <div class="row-container">
+        <div class="kartu li" onclick="suara('li')">li</div>
+        <div class="kartu" onclick="suara('di')">di</div>
+        <div class="kartu" onclick="suara('ba')">ba</div>
+        <div class="kartu li" onclick="suara('li')">li</div>
+        <div class="kartu" onclick="suara('ta')">ta</div>
+    </div>
+
+    <div class="row-container">
+        <div class="kartu li" onclick="suara('li')">li</div>
+        <div class="kartu" onclick="suara('ma')">ma</div>
+        <div class="kartu" onclick="suara('ra')">ra</div>
+        <div class="kartu" onclick="suara('ja')">ja</div>
+        <div class="kartu" onclick="suara('wa')">wa</div>
+        <div class="kartu li" onclick="suara('li')">li</div>
+    </div>
+
+    <hr>
+
+    <div class="row-container">
+        <div class="kartu" style="background: #fffbe6;" onclick="suara('rajawali')">rajawali</div>
+        <div class="kartu" style="background: #fffbe6;" onclick="suara('di')">di</div>
+        <div class="kartu" style="background: #fffbe6;" onclick="suara('udara')">udara</div>
+    </div>
+    
+    <div class="row-container">
+        <div class="kartu" style="background: #f0fff4;" onclick="suara('lima')">lima</div>
+        <div class="kartu" style="background: #f0fff4;" onclick="suara('lidi')">lidi</div>
+        <div class="kartu" style="background: #f0fff4;" onclick="suara('di')">di</div>
+        <div class="kartu" style="background: #f0fff4;" onclick="suara('kali')">kali</div>
+    </div>
+
+    <script>
+        // Membuat efek hembusan angin secara dinamis
+        const windBox = document.getElementById('wind-box');
+        for (let i = 0; i < 15; i++) {
+            const wind = document.createElement('div');
+            wind.className = 'wind-particle';
+            wind.style.width = Math.random() * 200 + 100 + 'px';
+            wind.style.top = Math.random() * 100 + 'vh';
+            wind.style.left = Math.random() * 100 + 'vw';
+            wind.style.animationDuration = Math.random() * 3 + 2 + 's';
+            wind.style.animationDelay = Math.random() * 5 + 's';
+            windBox.appendChild(wind);
+        }
+
+        function suara(teks) {
+            // Feedback visual kecil
+            const target = event.currentTarget;
+            target.style.transform = "scale(1.1)";
+            setTimeout(() => target.style.transform = "", 150);
+
+            window.speechSynthesis.cancel();
+            const s = new SpeechSynthesisUtterance(teks);
+            s.lang = 'id-ID';
+            s.rate = 0.65;
+            s.pitch = 1.2;
+            window.speechSynthesis.speak(s);
+        }
+    </script>
+
+</body>
+</html>
+
